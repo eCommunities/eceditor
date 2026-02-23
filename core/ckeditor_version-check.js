@@ -7,8 +7,8 @@
 
 ( function() {
 	var apiUrl = 'https://cke4.ckeditor.com/ckeditor4-secure-version/versions.json',
-		upgradeLink = 'https://ckeditor.com/ckeditor-4-support/',
-		versionRegex = /^4\.(\d+)\.(\d+)(-lts)?(?: \(?.+?\)?)?$/,
+		upgradeLink = 'https://ckeditor.com/ckeditor-4/',
+		versionRegex = /^4\.(\d+)\.(\d+)(?: \(?.+?\)?)?$/,
 		isDrupal = 'Drupal' in window,
 		consoleErrorDisplayed = false,
 		versionInfo = {
@@ -19,7 +19,7 @@
 		return;
 	}
 
-	CKEDITOR.config.versionCheck = versionInfo.current.isLts ? false : true;
+	CKEDITOR.config.versionCheck = true;
 
 	CKEDITOR.on( 'instanceReady', function( evt ) {
 		var editor = evt.editor;
@@ -167,8 +167,7 @@
 			original: version,
 			major: 4,
 			minor: Number( parts[ 1 ] ),
-			patch: Number( parts[ 2 ] ),
-			isLts: !!parts[ 3 ]
+			patch: Number( parts[ 2 ] )
 		};
 	}
 
@@ -187,8 +186,7 @@
 	 * You can manually disable this feature by setting the option to `false`,
 	 * but we strongly recommend upgrading the editor instead.
 	 *
-	 * - For CKEditor 4.22.* and below, this option is enabled by default.
-	 * - For CKEditor 4 LTS (4.23.0 and above), this option is disabled by default.
+	 * - For CKEditor 4.23.* and below, this option is enabled by default.
 	 *
 	 * @cfg {Boolean} [versionCheck]
 	 * @since 4.22.0
