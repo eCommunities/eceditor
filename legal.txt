@@ -1,0 +1,15 @@
+Legal Notice - License Choice Declaration
+========================================
+
+This distribution is based on CKEditor 4.23.0 (and below licensing terms)
+and explicitly declares the following license choice for this version:
+
+Mozilla Public License, Version 1.1 or later ("MPL")
+https://www.mozilla.org/MPL/MPL-1.1.html
+
+This declaration is made pursuant to the "legal.txt" mechanism described in
+LICENSE.md for CKEditor 4.23.* and below.
+
+As stated in LICENSE.md, this choice does not restrict any recipient of this
+software from using, reproducing, modifying, and distributing this software
+under any of the alternative licenses listed there.
