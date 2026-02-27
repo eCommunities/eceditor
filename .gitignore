@@ -35,3 +35,12 @@ bender-*.log
 # - we don't intent to force specific 3rd party dependency version via `package-lock.json` file
 # Such information should be specified in the package.json file.
 package-lock.json
+
+# Eclipse / IDE metadata
+.project
+.classpath
+.settings/
+.metadata/
+*.launch
+.factorypath
+.buildpath
