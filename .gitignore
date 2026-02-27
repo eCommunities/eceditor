@@ -44,3 +44,9 @@ package-lock.json
 *.launch
 .factorypath
 .buildpath
+
+# Local Codex agent instructions
+AGENTS.md
+agents.md
+**/AGENTS.md
+**/agents.md
