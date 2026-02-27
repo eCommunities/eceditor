@@ -25,7 +25,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.extraPlugins = 'ecmsInsertDocument,ecmsInsertImage,ecmsInsertMedia,scayt,codemirror';
 
 	// ECMS backend endpoint consumed by custom insert-image/document dialogs.
-	config.ecms_browserUrl = '/plugins/ckeditor/plugins/ecms/browser.php';
+	config.ecms_browserUrl = '/plugins/eceditor/plugins/ecms/browser.php';
 
 	config.disableObjectResizing = false;
 	config.image_removeLinkByEmptyURL = true;
@@ -41,19 +41,14 @@ CKEDITOR.editorConfig = function( config ) {
 	config.allowedContent = true;
 	config.autoParagraph = false;
 
-	config.protectedSource.push( /<([\S]+)[^>]*class="ecmsInsertMedia"[^>]*>.*<\/\1>/g );
-	config.protectedSource.push( /<ecms[\s\S]*?>/gi );
-	config.protectedSource.push( /<\/ecms[\s\S]*?>/gi );
-	config.protectedSource.push( /<ecms_function[\s\S]*?>/gi );
-	config.protectedSource.push( /<\/ecms_function[\s\S]*?>/gi );
-	config.protectedSource.push( /<ecms_function_if[\s\S]*?>/gi );
-	config.protectedSource.push( /<\/ecms_function_if[\s\S]*?>/gi );
-	config.protectedSource.push( /<ecms_function_ifnull[\s\S]*?>/gi );
-	config.protectedSource.push( /<\/ecms_function_ifnull[\s\S]*?>/gi );
-	config.protectedSource.push( /<ecms_function_ifnotnull[\s\S]*?>/gi );
-	config.protectedSource.push( /<\/ecms_function_ifnotnull[\s\S]*?>/gi );
-	config.protectedSource.push( /<i[\s\S]*?\>/g );
-	config.protectedSource.push( /<\/i[\s\S]*?\>/g );
+	config.protectedSource.push( /<([a-z0-9:_-]+)\b[^>]*\bclass=(["'])[^"']*\becmsInsertMedia\b[^"']*\2[^>]*>[\s\S]*?<\/\1>/gi );
+	config.protectedSource.push( /<\/?ecms\b[^>]*>/gi );
+	config.protectedSource.push( /<\/?ecms_function_if\b[^>]*>/gi );
+	config.protectedSource.push( /<\/?ecms_function_ifnull\b[^>]*>/gi );
+	config.protectedSource.push( /<\/?ecms_function_ifnotnull\b[^>]*>/gi );
+	// Protect only Font Awesome icon nodes (e.g. <i class="fa ..."></i>),
+	// instead of all <i> tags, to avoid heavy Source<->WYSIWYG reparse costs.
+	config.protectedSource.push( /<i\b[^>]*\bclass=(["'])[^"']*\bfa(?:s|r|l|b|d)?\b[^"']*\1[^>]*>\s*<\/i>/gi );
 
-	config.protectedTags = 'ecms|ecms_function|ecms_function_if|ecms_function_ifnull|ecms_function_ifnotnull';
+	config.protectedTags = 'ecms|ecms_function_if|ecms_function_ifnull|ecms_function_ifnotnull';
 };

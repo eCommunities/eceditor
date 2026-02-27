@@ -5,6 +5,7 @@
  */
 ( function() {
 	CKEDITOR.plugins.add( 'ecmsInsertImage', {
+		requires: 'dialog,button',
 		init: function( editor ) {
 			CKEDITOR.dialog.add('ecmsInsertImageDialog', this.path + 'dialogs/ecmsInsertImage.js');
 

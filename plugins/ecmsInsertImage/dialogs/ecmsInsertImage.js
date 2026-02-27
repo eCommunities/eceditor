@@ -7,6 +7,18 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 {
 	var imageDialog = function( editor, dialogType )
 	{
+		var imageLang = editor.lang.image || {
+			urlMissing: 'Image URL cannot be empty.',
+			alt: 'Alternative Text',
+			lockRatio: 'Lock Ratio',
+			resetSize: 'Reset Size',
+			validateBorder: 'Border must be a whole number.',
+			hSpace: 'HSpace',
+			validateHSpace: 'HSpace must be a whole number.',
+			vSpace: 'VSpace',
+			validateVSpace: 'VSpace must be a whole number.'
+		};
+
 		// Load image preview.
 		var IMAGE = 1,
 			LINK = 2,
@@ -573,7 +585,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													element.removeAttribute( 'src' );
 												}
 											},
-											validate : CKEDITOR.dialog.validate.notEmpty( editor.lang.image.urlMissing )
+											validate : CKEDITOR.dialog.validate.notEmpty( imageLang.urlMissing )
 										},
 										{
 
@@ -631,7 +643,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									 	{
 											id : 'txtAlt',
 											type : 'text',
-											label : editor.lang.image.alt,
+											label : imageLang.alt,
 											accessKey : 'A',
 											'default' : '',
 											onChange : function()
@@ -868,10 +880,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 														}
 													},
 													html : '<div>'+
-														'<a href="javascript:void(0)" tabindex="-1" title="' + editor.lang.image.lockRatio +
-														'" class="cke_btn_locked" id="' + btnLockSizesId + '" role="checkbox"><span class="cke_icon"></span><span class="cke_label">' + editor.lang.image.lockRatio + '</span></a>' +
-														'<a href="javascript:void(0)" tabindex="-1" title="' + editor.lang.image.resetSize +
-														'" class="cke_btn_reset" id="' + btnResetSizeId + '" role="button"><span class="cke_label">' + editor.lang.image.resetSize + '</span></a>'+
+														'<a href="javascript:void(0)" tabindex="-1" title="' + imageLang.lockRatio +
+														'" class="cke_btn_locked" id="' + btnLockSizesId + '" role="checkbox"><span class="cke_icon"></span><span class="cke_label">' + imageLang.lockRatio + '</span></a>' +
+														'<a href="javascript:void(0)" tabindex="-1" title="' + imageLang.resetSize +
+														'" class="cke_btn_reset" id="' + btnResetSizeId + '" role="button"><span class="cke_label">' + imageLang.resetSize + '</span></a>'+
 														'</div>'
 												}
 											]
@@ -896,7 +908,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													{
 														commitInternally.call( this, 'advanced:cssStyle' );
 													},
-													validate : CKEDITOR.dialog.validate.integer( editor.lang.image.validateBorder ),
+													validate : CKEDITOR.dialog.validate.integer( imageLang.validateBorder ),
 													setup : function( type, element )
 													{
 														if ( type == IMAGE )
@@ -1010,7 +1022,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													type : 'text',
 													id : 'txtHSpace',
 													width: '60px',
-													label : editor.lang.image.hSpace,
+													label : imageLang.hSpace,
 													'default' : '',
 													onKeyUp : function()
 													{
@@ -1020,7 +1032,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													{
 														commitInternally.call( this, 'advanced:cssStyle' );
 													},
-													validate : CKEDITOR.dialog.validate.integer( editor.lang.image.validateHSpace ),
+													validate : CKEDITOR.dialog.validate.integer( imageLang.validateHSpace ),
 													setup : function( type, element )
 													{
 														if ( type == IMAGE )
@@ -1073,7 +1085,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													type : 'text',
 													id : 'txtVSpace',
 													width : '60px',
-													label : editor.lang.image.vSpace,
+													label : imageLang.vSpace,
 													'default' : '',
 													onKeyUp : function()
 													{
@@ -1083,7 +1095,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													{
 														commitInternally.call( this, 'advanced:cssStyle' );
 													},
-													validate : CKEDITOR.dialog.validate.integer( editor.lang.image.validateVSpace ),
+													validate : CKEDITOR.dialog.validate.integer( imageLang.validateVSpace ),
 													setup : function( type, element )
 													{
 														if ( type == IMAGE )
