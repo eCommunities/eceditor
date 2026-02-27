@@ -43,6 +43,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	config.protectedSource.push( /<([a-z0-9:_-]+)\b[^>]*\bclass=(["'])[^"']*\becmsInsertMedia\b[^"']*\2[^>]*>[\s\S]*?<\/\1>/gi );
 	config.protectedSource.push( /<\/?ecms\b[^>]*>/gi );
+	config.protectedSource.push( /<\/?ecms_function\b[^>]*>/gi );
 	config.protectedSource.push( /<\/?ecms_function_if\b[^>]*>/gi );
 	config.protectedSource.push( /<\/?ecms_function_ifnull\b[^>]*>/gi );
 	config.protectedSource.push( /<\/?ecms_function_ifnotnull\b[^>]*>/gi );
@@ -50,5 +51,5 @@ CKEDITOR.editorConfig = function( config ) {
 	// instead of all <i> tags, to avoid heavy Source<->WYSIWYG reparse costs.
 	config.protectedSource.push( /<i\b[^>]*\bclass=(["'])[^"']*\bfa(?:s|r|l|b|d)?\b[^"']*\1[^>]*>\s*<\/i>/gi );
 
-	config.protectedTags = 'ecms|ecms_function_if|ecms_function_ifnull|ecms_function_ifnotnull';
+	config.protectedTags = 'ecms|ecms_function|ecms_function_if|ecms_function_ifnull|ecms_function_ifnotnull';
 };
