@@ -97,8 +97,8 @@ $picker_tab = new ECMS_Console_Tab('picker', 'Media Picker', array('active'=>($t
 ECMS_Console::add_tab( $picker_tab );
 
 // Menu
-$picker_tab->add_menu_item( new ECMS_Console_Menu_Item('upload', 'Upload Files', ECMS_WEBROOT.'ECMED/add_multi_media.php?type='.$_REQUEST['type'].(isset($_REQUEST['category_id']) ? '&category_id='.$_REQUEST['category_id'] : NULL), 'ECORE.addMedia.png') );
-$picker_tab->add_menu_item( new ECMS_Console_Menu_Item('up_dir', 'Up Directory', $parentLink, 'backfolder.gif') );
+$picker_tab->add_menu_item( new ECMS_Console_Menu_Item('upload', 'Upload Files', ECMS_WEBROOT.'ECMED/add_multi_media.php?type='.$_REQUEST['type'].(isset($_REQUEST['category_id']) ? '&category_id='.$_REQUEST['category_id'] : NULL), 'fa fa-upload') );
+$picker_tab->add_menu_item( new ECMS_Console_Menu_Item('up_dir', 'Up Directory', $parentLink, 'fa fa-folder-open') );
 $picker_tab->add_menu_item( new ECMS_Console_Menu_Item('cancel', 'Cancel Selection', 'add_multi_media.php', 'ECORE.inactive.png',NULL,"$('html', window.parent.document).css('overflow','visible'); $('#ecms_warehouse_browser', window.parent.document).remove();") );
 
 // Body

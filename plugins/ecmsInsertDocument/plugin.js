@@ -6,7 +6,28 @@
 ( function() {
     CKEDITOR.plugins.add( 'ecmsInsertDocument',
     {
+		requires: 'dialog,button',
         init: function( editor ) {
+			function resolveDocumentElement( element ) {
+				if (!element) { return null; }
+
+				if (element.type === CKEDITOR.NODE_TEXT) {
+					element = element.getParent();
+				}
+
+				if (element && element.getAscendant) {
+					element = element.getAscendant(function(node) {
+						return node && node.type === CKEDITOR.NODE_ELEMENT && node.is('div') && node.hasClass('ecmsInsertDocument');
+					}, true);
+				}
+
+				if (!element || !element.is || !element.is('div') || !element.hasClass('ecmsInsertDocument')) {
+					return null;
+				}
+
+				return element;
+			}
+
 			function getBrowserUrl( type ) {
 				var baseUrl = editor.config.ecms_browserUrl || ( CKEDITOR_BASEPATH + 'plugins/ecms/browser.php' ),
 					separator = baseUrl.indexOf( '?' ) === -1 ? '?' : '&';
@@ -102,9 +123,50 @@
 						}
 					],
 					onShow : function() {
+						var sel = editor.getSelection(),
+							element = editor._.ecmsInsertDocumentElement || ( sel && sel.getSelectedElement() );
 
-						// FIXME: NEED TO ALLOW THE CONTEXT BASED DIALOG ACCESS TO ANY EXISTING VALUES
+						if (!element && sel) {
+							element = sel.getStartElement();
+						}
 
+						if (!element && sel) {
+							var ranges = sel.getRanges();
+							if (ranges && ranges.length) {
+								element = ranges[0].getCommonAncestor();
+							}
+						}
+
+						element = resolveDocumentElement(element);
+
+						this._.ecmsDocumentElement = null;
+						editor._.ecmsInsertDocumentElement = null;
+
+						if (!element) {
+							this.setValueOf('basic', 'txtDocUrl', '');
+							this.setValueOf('basic', 'txtTitle', '');
+							this.setValueOf('basic', 'txtInfo', '');
+							this.setValueOf('basic', 'txtIcon', '');
+							return;
+						}
+
+						this._.ecmsDocumentElement = element;
+
+						var link = element.findOne('a'),
+							icon = link ? link.findOne('img') : null,
+							info = element.findOne('span'),
+							title = '';
+
+						if (link) {
+							title = CKEDITOR.tools.trim(link.getText() || '');
+							this.setValueOf('basic', 'txtDocUrl', link.getAttribute('href') || '');
+						} else {
+							this.setValueOf('basic', 'txtDocUrl', '');
+						}
+
+						this.setValueOf('basic', 'txtTitle', title);
+						this.setValueOf('basic', 'txtInfo', info ? (info.getText() || '').replace(/^\(/, '').replace(/\)$/, '') : '');
+						this.setValueOf('basic', 'txtIcon', icon ? (icon.getAttribute('src') || '') : '');
 					},
 					onOk : function() {
 
@@ -124,8 +186,11 @@
 								'</div>'
 							);
 
-						// Add the image element to the editor.
-						editor.insertElement(content);
+						if (this._.ecmsDocumentElement) {
+							content.replace(this._.ecmsDocumentElement);
+						} else {
+							editor.insertElement(content);
+						}
 					}
 				};
 			});
@@ -140,9 +205,9 @@
 
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(function( element, selection ) {
-					// The context will be for the 'a' element, get it's parent div.
-					element = element.getParent();
-					if (!element || !element.is('div') || !element.hasClass('ecmsInsertDocument')) { return null; }
+					element = resolveDocumentElement(element);
+					if (!element) { return null; }
+					editor._.ecmsInsertDocumentElement = element;
 					return { ecmsDocumentProperties : CKEDITOR.TRISTATE_OFF };
 				});
 			}
